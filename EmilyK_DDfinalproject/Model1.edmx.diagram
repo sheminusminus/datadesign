@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ede9a41f2054a4aaf7790dcb25477e4" Name="Diagram1">
+        <EntityTypeShape EntityType="CalendarEventsModel.CalendarEvent" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.EventType" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.Importance" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.Payment" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.PaymentType" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.Person" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.Recurring" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalendarEventsModel.Relation" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="CalendarEventsModel.FK__CalendarE__Event__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="CalendarEventsModel.FK__CalendarE__Impor__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="CalendarEventsModel.FK__CalendarE__Prima__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="CalendarEventsModel.FK__CalendarE__Recur__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="CalendarEventsModel.FK__CalendarE__Secon__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="CalendarEventsModel.FK__Payments__EventI__04E4BC85" ManuallyRouted="false" />
+        <AssociationConnector Association="CalendarEventsModel.FK__Payments__Paymen__03F0984C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

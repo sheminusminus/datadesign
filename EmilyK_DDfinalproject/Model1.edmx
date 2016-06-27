@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CalendarEventsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CalendarEvents">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="EventName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EventDate" Type="date" />
+          <Property Name="EventType" Type="int" />
+          <Property Name="Importance" Type="int" />
+          <Property Name="PrimaryPerson" Type="int" />
+          <Property Name="SecondaryPerson" Type="int" />
+          <Property Name="RecurringType" Type="int" />
+        </EntityType>
+        <EntityType Name="EventTypes">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Importance">
+          <Key>
+            <PropertyRef Name="ImportanceId" />
+          </Key>
+          <Property Name="ImportanceId" Type="int" Nullable="false" />
+          <Property Name="ImportanceLevel" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" />
+          <Property Name="PaymentType" Type="int" />
+          <Property Name="PaymentAmount" Type="int" />
+        </EntityType>
+        <EntityType Name="PaymentTypes">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Relation" Type="int" />
+        </EntityType>
+        <EntityType Name="Recurring">
+          <Key>
+            <PropertyRef Name="RecurringId" />
+          </Key>
+          <Property Name="RecurringId" Type="int" Nullable="false" />
+          <Property Name="RecurringType" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Relations">
+          <Key>
+            <PropertyRef Name="RelationId" />
+          </Key>
+          <Property Name="RelationId" Type="int" Nullable="false" />
+          <Property Name="Relation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__CalendarE__Event__76969D2E">
+          <End Role="EventTypes" Type="Self.EventTypes" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="EventType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Impor__778AC167">
+          <End Role="Importance" Type="Self.Importance" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Importance">
+              <PropertyRef Name="ImportanceId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="Importance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Prima__787EE5A0">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="PrimaryPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Recur__7C4F7684">
+          <End Role="Recurring" Type="Self.Recurring" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recurring">
+              <PropertyRef Name="RecurringId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="RecurringType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Secon__797309D9">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="SecondaryPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__EventI__04E4BC85">
+          <End Role="CalendarEvents" Type="Self.CalendarEvents" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CalendarEvents">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__Paymen__03F0984C">
+          <End Role="PaymentTypes" Type="Self.PaymentTypes" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="PaymentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CalendarEventsModelStoreContainer">
+          <EntitySet Name="CalendarEvents" EntityType="Self.CalendarEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Importance" EntityType="Self.Importance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentTypes" EntityType="Self.PaymentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recurring" EntityType="Self.Recurring" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Relations" EntityType="Self.Relations" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CalendarE__Event__76969D2E" Association="Self.FK__CalendarE__Event__76969D2E">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Impor__778AC167" Association="Self.FK__CalendarE__Impor__778AC167">
+            <End Role="Importance" EntitySet="Importance" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Prima__787EE5A0" Association="Self.FK__CalendarE__Prima__787EE5A0">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Recur__7C4F7684" Association="Self.FK__CalendarE__Recur__7C4F7684">
+            <End Role="Recurring" EntitySet="Recurring" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Secon__797309D9" Association="Self.FK__CalendarE__Secon__797309D9">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__EventI__04E4BC85" Association="Self.FK__Payments__EventI__04E4BC85">
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__Paymen__03F0984C" Association="Self.FK__Payments__Paymen__03F0984C">
+            <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CalendarEventsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CalendarEvent">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="EventName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EventDate" Type="DateTime" Precision="0" />
+          <Property Name="EventType" Type="Int32" />
+          <Property Name="Importance" Type="Int32" />
+          <Property Name="PrimaryPerson" Type="Int32" />
+          <Property Name="SecondaryPerson" Type="Int32" />
+          <Property Name="RecurringType" Type="Int32" />
+          <NavigationProperty Name="EventType1" Relationship="Self.FK__CalendarE__Event__76969D2E" FromRole="CalendarEvents" ToRole="EventTypes" />
+          <NavigationProperty Name="Importance1" Relationship="Self.FK__CalendarE__Impor__778AC167" FromRole="CalendarEvents" ToRole="Importance" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__CalendarE__Prima__787EE5A0" FromRole="CalendarEvents" ToRole="Persons" />
+          <NavigationProperty Name="Recurring" Relationship="Self.FK__CalendarE__Recur__7C4F7684" FromRole="CalendarEvents" ToRole="Recurring" />
+          <NavigationProperty Name="Person1" Relationship="Self.FK__CalendarE__Secon__797309D9" FromRole="CalendarEvents" ToRole="Persons" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__EventI__04E4BC85" FromRole="CalendarEvents" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CalendarEvents" Relationship="Self.FK__CalendarE__Event__76969D2E" FromRole="EventTypes" ToRole="CalendarEvents" />
+        </EntityType>
+        <EntityType Name="Importance">
+          <Key>
+            <PropertyRef Name="ImportanceId" />
+          </Key>
+          <Property Name="ImportanceId" Type="Int32" Nullable="false" />
+          <Property Name="ImportanceLevel" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CalendarEvents" Relationship="Self.FK__CalendarE__Impor__778AC167" FromRole="Importance" ToRole="CalendarEvents" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentId" />
+          </Key>
+          <Property Name="PaymentId" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int32" />
+          <Property Name="PaymentType" Type="Int32" />
+          <Property Name="PaymentAmount" Type="Int32" />
+          <NavigationProperty Name="CalendarEvent" Relationship="Self.FK__Payments__EventI__04E4BC85" FromRole="Payments" ToRole="CalendarEvents" />
+          <NavigationProperty Name="PaymentType1" Relationship="Self.FK__Payments__Paymen__03F0984C" FromRole="Payments" ToRole="PaymentTypes" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__Paymen__03F0984C" FromRole="PaymentTypes" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Relation" Type="Int32" />
+          <NavigationProperty Name="CalendarEvents" Relationship="Self.FK__CalendarE__Prima__787EE5A0" FromRole="Persons" ToRole="CalendarEvents" />
+          <NavigationProperty Name="CalendarEvents1" Relationship="Self.FK__CalendarE__Secon__797309D9" FromRole="Persons" ToRole="CalendarEvents" />
+        </EntityType>
+        <EntityType Name="Recurring">
+          <Key>
+            <PropertyRef Name="RecurringId" />
+          </Key>
+          <Property Name="RecurringId" Type="Int32" Nullable="false" />
+          <Property Name="RecurringType" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CalendarEvents" Relationship="Self.FK__CalendarE__Recur__7C4F7684" FromRole="Recurring" ToRole="CalendarEvents" />
+        </EntityType>
+        <EntityType Name="Relation">
+          <Key>
+            <PropertyRef Name="RelationId" />
+          </Key>
+          <Property Name="RelationId" Type="Int32" Nullable="false" />
+          <Property Name="Relation1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__CalendarE__Event__76969D2E">
+          <End Role="EventTypes" Type="Self.EventType" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="EventType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Impor__778AC167">
+          <End Role="Importance" Type="Self.Importance" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Importance">
+              <PropertyRef Name="ImportanceId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="Importance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Prima__787EE5A0">
+          <End Role="Persons" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="PrimaryPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Recur__7C4F7684">
+          <End Role="Recurring" Type="Self.Recurring" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recurring">
+              <PropertyRef Name="RecurringId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="RecurringType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CalendarE__Secon__797309D9">
+          <End Role="Persons" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="CalendarEvents" Type="Self.CalendarEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="CalendarEvents">
+              <PropertyRef Name="SecondaryPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__EventI__04E4BC85">
+          <End Role="CalendarEvents" Type="Self.CalendarEvent" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CalendarEvents">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__Paymen__03F0984C">
+          <End Role="PaymentTypes" Type="Self.PaymentType" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentTypes">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="PaymentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CalendarEventsEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CalendarEvents" EntityType="Self.CalendarEvent" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventType" />
+          <EntitySet Name="Importances" EntityType="Self.Importance" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
+          <EntitySet Name="Persons" EntityType="Self.Person" />
+          <EntitySet Name="Recurrings" EntityType="Self.Recurring" />
+          <EntitySet Name="Relations" EntityType="Self.Relation" />
+          <AssociationSet Name="FK__CalendarE__Event__76969D2E" Association="Self.FK__CalendarE__Event__76969D2E">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Impor__778AC167" Association="Self.FK__CalendarE__Impor__778AC167">
+            <End Role="Importance" EntitySet="Importances" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Prima__787EE5A0" Association="Self.FK__CalendarE__Prima__787EE5A0">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Recur__7C4F7684" Association="Self.FK__CalendarE__Recur__7C4F7684">
+            <End Role="Recurring" EntitySet="Recurrings" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CalendarE__Secon__797309D9" Association="Self.FK__CalendarE__Secon__797309D9">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__EventI__04E4BC85" Association="Self.FK__Payments__EventI__04E4BC85">
+            <End Role="CalendarEvents" EntitySet="CalendarEvents" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__Paymen__03F0984C" Association="Self.FK__Payments__Paymen__03F0984C">
+            <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CalendarEventsModelStoreContainer" CdmEntityContainer="CalendarEventsEntities2">
+          <EntitySetMapping Name="CalendarEvents">
+            <EntityTypeMapping TypeName="CalendarEventsModel.CalendarEvent">
+              <MappingFragment StoreEntitySet="CalendarEvents">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="Importance" ColumnName="Importance" />
+                <ScalarProperty Name="PrimaryPerson" ColumnName="PrimaryPerson" />
+                <ScalarProperty Name="SecondaryPerson" ColumnName="SecondaryPerson" />
+                <ScalarProperty Name="RecurringType" ColumnName="RecurringType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="CalendarEventsModel.EventType">
+              <MappingFragment StoreEntitySet="EventTypes">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Importances">
+            <EntityTypeMapping TypeName="CalendarEventsModel.Importance">
+              <MappingFragment StoreEntitySet="Importance">
+                <ScalarProperty Name="ImportanceId" ColumnName="ImportanceId" />
+                <ScalarProperty Name="ImportanceLevel" ColumnName="ImportanceLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="CalendarEventsModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="CalendarEventsModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentTypes">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persons">
+            <EntityTypeMapping TypeName="CalendarEventsModel.Person">
+              <MappingFragment StoreEntitySet="Persons">
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Relation" ColumnName="Relation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recurrings">
+            <EntityTypeMapping TypeName="CalendarEventsModel.Recurring">
+              <MappingFragment StoreEntitySet="Recurring">
+                <ScalarProperty Name="RecurringId" ColumnName="RecurringId" />
+                <ScalarProperty Name="RecurringType" ColumnName="RecurringType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Relations">
+            <EntityTypeMapping TypeName="CalendarEventsModel.Relation">
+              <MappingFragment StoreEntitySet="Relations">
+                <ScalarProperty Name="RelationId" ColumnName="RelationId" />
+                <ScalarProperty Name="Relation1" ColumnName="Relation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
